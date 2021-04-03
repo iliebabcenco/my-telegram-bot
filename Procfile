@@ -1,1 +1,1 @@
-bot: ruby bin/main.rb
+run: ruby bin/main.rb
