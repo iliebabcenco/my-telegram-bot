@@ -24,21 +24,22 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
     
     mscounter += 1
-    response = Lgtictac.check_message(message.text)
-    mess = nil
+    
    
     if mscounter == 1
       send_message(bot, message,
                    "Hey, #{message.from.first_name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
     else
+      response = Lgtictac.check_message(message.text)
+      mess = nil
       case response
-        when '/start', 'y', 'yes', 'yeah', 'yep'
+        when 'start'
           mess = UItictac.start_game
           bot.api.send_message(
             chat_id: message.chat.id,
             text: mess
           )
-        when '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        when 'numbers'
           mess = UItictac.draw_board(response)
           question = 'choose a number:'
           answers =
@@ -47,8 +48,11 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
               one_time_keyboard: true
             )
           bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
-        when '/end', '/close', 'no', 'end'
+        when 'end'
           mess = UItictac.finish_game(response)
+          send_message(bot, message, mess)
+        when 'numbers-error'
+          mess = 'please select an available number from the board'
           send_message(bot, message, mess)
         else
           mess = 'unknown command, try /start, /start start, start /end, /close, no'
