@@ -22,25 +22,21 @@ end
 Telegram::Bot::Client.run(TOKEN) do |bot|
   mscounter = 0
   bot.listen do |message|
-    
+    user_name = message.from.first_name
     mscounter += 1
-    
-   
     if mscounter == 1
       send_message(bot, message,
-                   "Hey, #{message.from.first_name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
+                   "Hey, #{user_name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
     else
       response = Lgtictac.check_message(message.text)
+      p "response = #{response}"
       mess = nil
       case response
         when 'start'
           mess = UItictac.start_game
-          bot.api.send_message(
-            chat_id: message.chat.id,
-            text: mess
-          )
+          send_message(bot, message, mess)
         when 'numbers'
-          mess = UItictac.draw_board(response)
+          mess = UItictac.draw_board
           question = 'choose a number:'
           answers =
             Telegram::Bot::Types::ReplyKeyboardMarkup.new(

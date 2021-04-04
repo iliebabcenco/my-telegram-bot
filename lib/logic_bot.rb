@@ -1,9 +1,14 @@
 require 'telegram/bot'
+require 'ui_tictac.rb'
+require 'player.rb'
 #require './bin/main.rb'
 
 module Lgtictac
 
     @@play = false
+    player = Player.new(user_name)
+    bot = Player.new('smart_bot')
+    players = [player, bot]
 
     def self.play?(bool=nil)
         raise ArgumentError unless !!bool == bool
@@ -27,6 +32,10 @@ module Lgtictac
         else
           return 'numbers-error'
         end
+      end
+
+      def self.prepare_data(choice)
+        
       end
     
 
