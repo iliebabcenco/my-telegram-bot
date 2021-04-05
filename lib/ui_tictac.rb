@@ -24,9 +24,9 @@ class UI_game
   def start_game(_param = nil)
     "Ok, let's start the game, there are instructions\n
   1. You were randomly set to play with #{game_logic.player.symbol}\n
-  2. Choose an available number from the board and try to win:\n
+  2. Choose an available number from the board and try to win;\n
   3. If you wanna finish the game try: /end, /close, no, end, n\n
-  4. Gool luck and have fun!"
+  4. Gool luck and have fun!\n"
   end
 
   def finish_game(param = nil)

@@ -1,6 +1,7 @@
 require 'telegram/bot'
 require './lib/ui_tictac'
 require './lib/logic_bot'
+require './lib/player'
 
 TOKEN = '1723295532:AAG4CclSM9lsDBAZFTSKTzIKxdWFZUnl3RU'.freeze
 
@@ -33,6 +34,8 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       when 'start'
         mess = interface.start_game
         send_message(bot, message, mess)
+        board = interface.draw_board
+        send_message(bot, message, board)
       when 'numbers'
         mess = interface.key_board
         question = 'Choose an available number from the board:'
@@ -50,8 +53,15 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         elsif
           mess = "#{game_logic.winner} is winner!"
         end
+        mess += "\nIf you wanna restart the game type start"
+        interface = UI_game.new
+        game_logic = interface.game_logic
+        player = game_logic.player
         send_message(bot, message, mess)
       when 'end'
+        interface = UI_game.new
+        game_logic = interface.game_logic
+        player = game_logic.player
         mess = interface.finish_game
         send_message(bot, message, mess)
       when 'numbers-error'

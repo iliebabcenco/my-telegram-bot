@@ -29,6 +29,7 @@ class GameLogic
         if @play
           make_move(mess)
           if !@winner.nil?
+            Player.reset_choices
             return 'game-over'
           else
             return 'numbers'
@@ -37,12 +38,13 @@ class GameLogic
           return 'numbers-error'
         end
       when '/end', '/close', 'no', 'end', 'n'
+        Player.reset_choices
         @play = false
         'end'
       end
     else
       case mess
-      when '/start', 'y', 'yes', 'yeah', 'yep', 'start'
+      when 'y', 'yes', 'yeah', 'yep', 'start'
         #p "we are in check message when start, play is #{play?}"
         if @play == false
           @play = true
@@ -65,14 +67,6 @@ class GameLogic
       @bot_player.symbol = 'X'
     end
   end
-
-  # def refresh
-
-  #   Player.reset_choices
-  #   @winner = nil
-
-  # end
-
 
   def make_move(choice = nil)
     unless check_winner
