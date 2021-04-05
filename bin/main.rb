@@ -30,30 +30,32 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       p "response = #{response}"
       mess = nil
       case response
-        when 'start'
-          mess = interface.start_game
-          send_message(bot, message, mess)
-        when 'numbers'
-          mess = interface.draw_board
-          question = "Choose an available number from the board"
-          answers =
-            Telegram::Bot::Types::ReplyKeyboardMarkup.new(
-              keyboard: mess,
-              one_time_keyboard: true
-            )
-          bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
-        when 'end'
-          mess = interface.finish_game(response)
-          send_message(bot, message, mess)
-        when 'numbers-error'
-          mess = 'please select an available number from the board'
-          send_message(bot, message, mess)
-        else
-          mess = 'unknown command, try /start, /start start, start /end, /close, no'
-          send_message(bot, message, mess)
+      when 'start'
+        mess = interface.start_game
+        send_message(bot, message, mess)
+      when 'numbers'
+        mess = interface.key_board
+        question = 'Choose an available number from the board'
+        answers =
+          Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+            keyboard: mess,
+            one_time_keyboard: true
+          )
+
+        bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
+        board = interface.draw_board(response)
+        send_message(bot, message, board)
+      when 'end'
+        mess = interface.finish_game
+        send_message(bot, message, mess)
+      when 'numbers-error'
+        mess = 'please select an available number from the board'
+        send_message(bot, message, mess)
+      else
+        mess = 'unknown command, try /start, /start start, start /end, /close, no'
+        send_message(bot, message, mess)
       end
-      
+
     end
-    
   end
 end
