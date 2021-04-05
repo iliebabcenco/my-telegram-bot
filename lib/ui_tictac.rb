@@ -8,19 +8,17 @@ class UI_game
     @game_logic = GameLogic.new
     @board = Player.choices
     #@board = %w[1 2 3 4 5 6 7 8 9]
-    @keyboard = [[@board[0], @board[1], @board[2]], [@board[3], @board[4], @board[5]],
-                 [@board[6], @board[7], @board[8]]]
+    @keyboard = [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
+                 [@board[6].to_s, @board[7].to_s, @board[8].to_s]]
   end
 
-  def key_board(_choice = nil)
-    @keyboard
+  def key_board
+    return [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
+    [@board[6].to_s, @board[7].to_s, @board[8].to_s]]
   end
 
   def draw_board(choice = nil)
-    p "there is choice #{choice}"
-    p "there is @board[choice.to_i - 1] #{@board[choice.to_i - 1]}"
-    @board[choice.to_i - 1] = 'X' if choice.to_i.is_a? Integer
-    "+-----+-----+-----+\n|  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n|  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n+-----+-----+-----+\n|  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
+    return "+-----+-----+-----+\n|  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n|  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n+-----+-----+-----+\n|  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
   end
 
   def start_game(_param = nil)

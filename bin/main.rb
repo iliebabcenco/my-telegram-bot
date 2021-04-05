@@ -35,16 +35,15 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         send_message(bot, message, mess)
       when 'numbers'
         mess = interface.key_board
-        question = 'Choose an available number from the board'
+        question = 'Choose an available number from the board:'
         answers =
           Telegram::Bot::Types::ReplyKeyboardMarkup.new(
             keyboard: mess,
             one_time_keyboard: true
           )
-
         bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
-        board = interface.draw_board(response)
-        send_message(bot, message, board)
+         board = interface.draw_board
+         send_message(bot, message, board)
       when 'end'
         mess = interface.finish_game
         send_message(bot, message, mess)

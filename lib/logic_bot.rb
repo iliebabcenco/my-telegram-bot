@@ -10,7 +10,7 @@ class GameLogic
     @play = false
     @player = Player.new
     @bot_player = Player.new('smart_bot')
-    @players = [@player, @bot]
+    @players = [@player, @bot_player]
   end
 
   def play?(bool = nil)
@@ -24,22 +24,26 @@ class GameLogic
   def check_message(mess = nil)
     case mess
     when '/start', 'y', 'yes', 'yeah', 'yep', 'start'
-      p "we are in check message when start, play is #{play?}"
+      #p "we are in check message when start, play is #{play?}"
       if @play == false
         @play = true
         try = Random.new.rand(2)
         if try == 1
           @player.symbol = 'X'
-          @bot_palyer = 'O'
+          @bot_palyer.symbol = 'O'
         else
           @player.symbol = 'O'
-          @bot_palyer = 'X'
+          @bot_palyer.symbol = 'X'
         end
         'start'
       end
     when '1', '2', '3', '4', '5', '6', '7', '8', '9'
-      player.make_choice(mess)
-      return 'numbers' if @play
+      if @play
+        make_move(mess)
+        return 'numbers'
+      else
+        return 'numbers-error'
+      end
     when '/end', '/close', 'no', 'end', 'n'
       @play = false
       'end'
@@ -48,5 +52,17 @@ class GameLogic
     end
   end
 
-  def self.prepare_data(choice); end
+  def make_move(choice = nil)
+    if (bot_player.symbol == 'X')
+      bot_player.make_choice
+      player.make_choice(choice)
+    else
+      player.make_choice(choice)
+      bot_player.make_choice
+    end
+  end
+
+  def bot_logic_choice
+    
+  end
 end
