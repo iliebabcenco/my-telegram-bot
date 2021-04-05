@@ -6,38 +6,36 @@ TOKEN = '1723295532:AAG4CclSM9lsDBAZFTSKTzIKxdWFZUnl3RU'.freeze
 
 ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah bro, try /start', 'or you can try start',
            'print start hehe'].freeze
-include UItictac
-include Lgtictac
-
-
 
 def send_message(bot, ms, text = nil)
   bot.api.send_message(
     chat_id: ms.chat.id,
     text: text
   )
-  
 end
 
 Telegram::Bot::Client.run(TOKEN) do |bot|
   mscounter = 0
+  interface = UI_game.new
+  game_logic = interface.game_logic
+  player = game_logic.player
   bot.listen do |message|
-    user_name = message.from.first_name
+    player.name = message.from.first_name
     mscounter += 1
     if mscounter == 1
       send_message(bot, message,
-                   "Hey, #{user_name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
+                   "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
     else
-      response = Lgtictac.check_message(message.text)
+      response = game_logic.check_message(message.text)
       p "response = #{response}"
       mess = nil
       case response
         when 'start'
-          mess = UItictac.start_game
+          mess = interface.start_game
           send_message(bot, message, mess)
         when 'numbers'
-          mess = UItictac.draw_board
-          question = 'choose a number:'
+          mess = interface.draw_board
+          question = "Choose an available number from the board"
           answers =
             Telegram::Bot::Types::ReplyKeyboardMarkup.new(
               keyboard: mess,
@@ -45,7 +43,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
             )
           bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
         when 'end'
-          mess = UItictac.finish_game(response)
+          mess = interface.finish_game(response)
           send_message(bot, message, mess)
         when 'numbers-error'
           mess = 'please select an available number from the board'

@@ -1,8 +1,8 @@
 class Player
 
-    attr_accessor :answers, :symbol
+    attr_accessor :answers, :symbol, :name
 
-    def initialize(name)
+    def initialize(name=nil)
         @name = name
         @answers = []
         @symbol = nil
