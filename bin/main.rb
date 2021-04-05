@@ -24,8 +24,14 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
     player.name = message.from.first_name
     mscounter += 1
     if mscounter == 1
-      send_message(bot, message,
-                   "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)")
+      # send_message(bot, message,
+      #              )
+      answers =
+        Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+          keyboard: ['yes', 'no'],
+          one_time_keyboard: true
+        )
+        bot.api.sendMessage(chat_id: message.chat.id, text: "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)", reply_markup: answers)
     else
       response = game_logic.check_message(message.text)
       p "response = #{response}"
@@ -35,7 +41,14 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         mess = interface.start_game
         send_message(bot, message, mess)
         board = interface.draw_board
-        send_message(bot, message, board)
+        answers =
+        Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+          keyboard: interface.key_board,
+          one_time_keyboard: true
+        )
+        bot.api.sendMessage(chat_id: message.chat.id, text: board, reply_markup: answers)
+        
+        
       when 'numbers'
         mess = interface.key_board
         question = 'Choose an available number from the board:'

@@ -37,14 +37,14 @@ class GameLogic
         else
           return 'numbers-error'
         end
-      when '/end', '/close', 'no', 'end', 'n'
+      when '/end', '/close', 'no', 'end', 'n', 'N'
         Player.reset_choices
         @play = false
         'end'
       end
     else
       case mess
-      when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!'
+      when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!', 'Y'
         #p "we are in check message when start, play is #{play?}"
         if @play == false
           @play = true
@@ -84,11 +84,11 @@ class GameLogic
       intersection = sub_array & player.answers
       intersection2 = sub_array & bot_player.answers
       if intersection == sub_array
-        @play = true
+        @play = false
         @winner = player.name
         return true
       elsif intersection2 == sub_array
-        @play = true
+        @play = false
         @winner = bot_player.name
         return true
       elsif bot_player.answers.length >= 5 || player.answers.length >= 5
