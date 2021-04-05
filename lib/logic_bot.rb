@@ -49,6 +49,9 @@ class GameLogic
         if @play == false
           @play = true
           set_symbols
+          if bot_player.symbol == 'X'
+            bot_player.make_choice(bot_logic_choice)
+          end
           'start'
         end
       else
@@ -70,14 +73,8 @@ class GameLogic
 
   def make_move(choice = nil)
     unless check_winner
-      if (bot_player.symbol == 'X')
-        bot_player.make_choice(bot_logic_choice)
-        player.make_choice(choice)
-      else
-        player.make_choice(choice)
-        bot_player.make_choice(bot_logic_choice)
-      end
-      
+      player.make_choice(choice)
+      bot_player.make_choice(bot_logic_choice)
     end
   end
 
@@ -110,14 +107,16 @@ class GameLogic
     #first move
     if bot_player.answers.length == 0
       good_start = [1, 3, 7, 9, 5]
-      bot_choice = good_start[Random.new.rand(6)]
+     
+      bot_choice = good_start[Random.new.rand(0..4)]
       while player.answers.include?(bot_choice)
-        bot_choice = good_start[Random.new.rand(6)]
+        bot_choice = good_start[Random.new.rand(0..4)]
       end
+      p "bot logic to choose #{bot_choice}"
       return bot_choice
     end
     if available_choices.length > 0
-      return available_choices[Random.new.rand(available_choices.length)]
+      return available_choices[Random.new.rand(0..available_choices.length-1)]
     else
       return
     end

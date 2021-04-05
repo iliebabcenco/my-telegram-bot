@@ -5,7 +5,7 @@ require './lib/player'
 
 TOKEN = '1723295532:AAG4CclSM9lsDBAZFTSKTzIKxdWFZUnl3RU'.freeze
 
-ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah bro, try /start', 'or you can try start',
+ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah, try /start', 'or you can try start',
            'print start hehe'].freeze
 
 def send_message(bot, ms, text = nil)

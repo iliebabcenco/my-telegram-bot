@@ -24,9 +24,10 @@ class Player
         @answers.push(choice.to_i)
         @@choices[choice.to_i-1] = @symbol
     end
+    p "#{self}"
   end
 
   def to_s
-    "Player = #{@name} with answers = #{@answers} and symbol = #{@symbol} choices = #{@@choices}"
+    "Player = #{@name} with answers = #{@answers} and symbol = #{@symbol}"
   end
 end
