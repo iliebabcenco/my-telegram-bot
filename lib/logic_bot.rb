@@ -16,7 +16,7 @@ class GameLogic
 
   def play?(bool = nil)
     return @play if bool.nil?
-    raise ArgumentError unless !!bool == bool
+    raise ArgumentError unless !bool.nil? == bool
 
     @play = bool
     @play
@@ -28,14 +28,14 @@ class GameLogic
       when '1', '2', '3', '4', '5', '6', '7', '8', '9'
         if @play
           make_move(mess)
-          if !@winner.nil?
-            Player.reset_choices
-            return 'game-over'
+          if @winner.nil?
+            'numbers'
           else
-            return 'numbers'
+            Player.reset_choices
+            'game-over'
           end
         else
-          return 'numbers-error'
+          'numbers-error'
         end
       when '/end', '/close', 'no', 'end', 'n', 'N'
         Player.reset_choices
@@ -45,13 +45,11 @@ class GameLogic
     else
       case mess
       when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!', 'Y'
-        #p "we are in check message when start, play is #{play?}"
+        # p "we are in check message when start, play is #{play?}"
         if @play == false
           @play = true
           set_symbols
-          if bot_player.symbol == 'X'
-            bot_player.make_choice(bot_logic_choice)
-          end
+          bot_player.make_choice(bot_logic_choice) if bot_player.symbol == 'X'
           'start'
         end
       else
@@ -97,35 +95,26 @@ class GameLogic
         return true
       end
     end
-    return false
+    false
   end
 
   def bot_logic_choice
     # if bot_player.symbol = 'X'
     available_choices = check_board
     bot_choice = nil
-    #first move
-    if bot_player.answers.length == 0
+    # first move
+    if bot_player.answers.length.zero?
       good_start = [1, 3, 7, 9, 5]
-     
+
       bot_choice = good_start[Random.new.rand(0..4)]
-      while player.answers.include?(bot_choice)
-        bot_choice = good_start[Random.new.rand(0..4)]
-      end
+      bot_choice = good_start[Random.new.rand(0..4)] while player.answers.include?(bot_choice)
       p "bot logic to choose #{bot_choice}"
       return bot_choice
     end
-    if available_choices.length > 0
-      return available_choices[Random.new.rand(0..available_choices.length-1)]
-    else
-      return
-    end
-
+    available_choices[Random.new.rand(0..available_choices.length - 1)] if available_choices.length.positive?
   end
 
   def check_board
-    board = Player.choices.select {|x| x.is_a? Integer}
-    return board
+    Player.choices.select { |x| x.is_a? Integer }
   end
-
 end

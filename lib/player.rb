@@ -7,7 +7,6 @@ class Player
     @name = name
     @answers = []
     @symbol = nil
-    
   end
 
   def self.choices
@@ -19,12 +18,12 @@ class Player
   end
 
   def make_choice(choice = nil)
-    p "#{self.name} is making a choice = #{choice}"
+    p "#{name} is making a choice = #{choice}"
     if @@choices.include?(choice.to_i)
-        @answers.push(choice.to_i)
-        @@choices[choice.to_i-1] = @symbol
+      @answers.push(choice.to_i)
+      @@choices[choice.to_i - 1] = @symbol
     end
-    p "#{self}"
+    p to_s
   end
 
   def to_s

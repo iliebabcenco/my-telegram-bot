@@ -1,4 +1,4 @@
-require_relative 'player.rb'
+require_relative 'player'
 
 class UI_game
   attr_accessor :board, :keyboard
@@ -7,21 +7,21 @@ class UI_game
   def initialize
     @game_logic = GameLogic.new
     @board = Player.choices
-    #@board = %w[1 2 3 4 5 6 7 8 9]
+    # @board = %w[1 2 3 4 5 6 7 8 9]
     @keyboard = [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
                  [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
 
   def key_board
-    return [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
-    [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
+    [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
+     [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
 
-  def draw_board(choice = nil)
-    return "+-----+-----+-----+\n |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n+-----+-----+-----+\n |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
+  def draw_board(_choice = nil)
+    "+-----+-----+-----+\n |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n+-----+-----+-----+\n |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
   end
 
-  def start_game(_param = nil)
+  def start_game
     "Ok, let's start the game, there are instructions\n
   1. You were randomly set to play with #{game_logic.player.symbol}\n
   2. Choose an available number from the board and try to win;\n
@@ -29,7 +29,7 @@ class UI_game
   4. Gool luck and have fun!\n"
   end
 
-  def finish_game(param = nil)
-    return "Game finished, thank you for the game!\nType start if you wanna play again" if param.nil?
+  def finish_game
+    "Game finished, thank you for the game!\nType start if you wanna play again"
   end
 end
