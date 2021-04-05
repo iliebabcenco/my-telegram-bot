@@ -9,12 +9,12 @@ class UI_game
     @board = Player.choices
     #@board = %w[1 2 3 4 5 6 7 8 9]
     @keyboard = [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
-                 [@board[6].to_s, @board[7].to_s, @board[8].to_s]]
+                 [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
 
   def key_board
     return [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
-    [@board[6].to_s, @board[7].to_s, @board[8].to_s]]
+    [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
 
   def draw_board(choice = nil)
@@ -30,6 +30,6 @@ class UI_game
   end
 
   def finish_game(param = nil)
-    return 'Game finished, thank you for the game!' if param.nil?
+    return "Game finished, thank you for the game!\nType start if you wanna play again" if param.nil?
   end
 end

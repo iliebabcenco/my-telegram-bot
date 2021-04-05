@@ -44,7 +44,7 @@ class GameLogic
       end
     else
       case mess
-      when 'y', 'yes', 'yeah', 'yep', 'start'
+      when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!'
         #p "we are in check message when start, play is #{play?}"
         if @play == false
           @play = true

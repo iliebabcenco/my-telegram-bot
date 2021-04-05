@@ -57,13 +57,23 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         interface = UI_game.new
         game_logic = interface.game_logic
         player = game_logic.player
-        send_message(bot, message, mess)
+        answers =
+          Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+            keyboard: 'Start!',
+            one_time_keyboard: true
+          )
+        bot.api.sendMessage(chat_id: message.chat.id, text: mess, reply_markup: answers)
       when 'end'
         interface = UI_game.new
         game_logic = interface.game_logic
         player = game_logic.player
         mess = interface.finish_game
-        send_message(bot, message, mess)
+        answers =
+          Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+            keyboard: 'Start!',
+            one_time_keyboard: true
+          )
+        bot.api.sendMessage(chat_id: message.chat.id, text: mess, reply_markup: answers)
       when 'numbers-error'
         mess = 'please select an available number from the board'
         send_message(bot, message, mess)
