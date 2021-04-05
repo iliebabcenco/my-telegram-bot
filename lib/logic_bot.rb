@@ -45,7 +45,6 @@ class GameLogic
     else
       case mess
       when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!', 'Y'
-        # p "we are in check message when start, play is #{play?}"
         if @play == false
           @play = true
           set_symbols
@@ -72,6 +71,8 @@ class GameLogic
   def make_move(choice = nil)
     unless check_winner
       player.make_choice(choice)
+    end
+    unless check_winner
       bot_player.make_choice(bot_logic_choice)
     end
   end
@@ -89,26 +90,24 @@ class GameLogic
         @play = false
         @winner = bot_player.name
         return true
-      elsif bot_player.answers.length >= 5 || player.answers.length >= 5
-        @play = false
-        @winner = 'DRAW'
-        return true
       end
     end
+    if bot_player.answers.length >= 5 || player.answers.length >= 5
+      @play = false
+      @winner = 'DRAW'
+      return true
+    end
+    
     false
   end
 
   def bot_logic_choice
-    # if bot_player.symbol = 'X'
     available_choices = check_board
     bot_choice = nil
-    # first move
     if bot_player.answers.length.zero?
       good_start = [1, 3, 7, 9, 5]
-
       bot_choice = good_start[Random.new.rand(0..4)]
       bot_choice = good_start[Random.new.rand(0..4)] while player.answers.include?(bot_choice)
-      p "bot logic to choose #{bot_choice}"
       return bot_choice
     end
     available_choices[Random.new.rand(0..available_choices.length - 1)] if available_choices.length.positive?

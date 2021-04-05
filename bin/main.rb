@@ -29,8 +29,10 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
           keyboard: %w[yes no],
           one_time_keyboard: true
         )
-      bot.api.sendMessage(chat_id: message.chat.id,
-                          text: "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)", reply_markup: answers)
+      bot.api.sendMessage(
+        chat_id: message.chat.id,
+        text: "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)", 
+        reply_markup: answers)
     else
       response = game_logic.check_message(message.text)
       p "response = #{response}"
@@ -58,6 +60,8 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         board = interface.draw_board
         send_message(bot, message, board)
       when 'game-over'
+        mess2 = interface.draw_board
+        send_message(bot, message, mess2)
         if game_logic.winner == 'DRAW'
           mess = "It's a DRAW"
         elsif mess = "#{game_logic.winner} is winner!"

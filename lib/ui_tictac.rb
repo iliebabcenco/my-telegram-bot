@@ -7,7 +7,6 @@ class UI_game
   def initialize
     @game_logic = GameLogic.new
     @board = Player.choices
-    # @board = %w[1 2 3 4 5 6 7 8 9]
     @keyboard = [[@board[0].to_s, @board[1].to_s, @board[2].to_s], [@board[3].to_s, @board[4].to_s, @board[5].to_s],
                  [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
