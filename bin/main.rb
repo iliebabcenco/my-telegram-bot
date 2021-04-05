@@ -44,6 +44,9 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
          board = interface.draw_board
          send_message(bot, message, board)
+      when 'game-over'
+        mess = "We have a winner!"
+        send_message(bot, message, mess)
       when 'end'
         mess = interface.finish_game
         send_message(bot, message, mess)

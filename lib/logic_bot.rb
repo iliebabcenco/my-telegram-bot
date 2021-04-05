@@ -4,14 +4,14 @@ require_relative 'player'
 
 class GameLogic
   attr_accessor :play, :player
-  attr_reader :bot_player, :players
+  attr_reader :bot_player, :players, :winner
 
   def initialize
     @play = false
     @player = Player.new
     @bot_player = Player.new('smart_bot')
     @players = [@player, @bot_player]
-    @winner = 'DRAW'
+    @winner = nil
   end
 
   def play?(bool = nil)
@@ -28,20 +28,18 @@ class GameLogic
       #p "we are in check message when start, play is #{play?}"
       if @play == false
         @play = true
-        try = Random.new.rand(2)
-        if try == 1
-          @player.symbol = 'X'
-          @bot_palyer.symbol = 'O'
-        else
-          @player.symbol = 'O'
-          @bot_palyer.symbol = 'X'
-        end
+        set_symbols
         'start'
       end
     when '1', '2', '3', '4', '5', '6', '7', '8', '9'
       if @play
         make_move(mess)
-        return 'numbers'
+        if !@winner.nil?
+          
+          return 'game-over'
+        else
+          return 'numbers'
+        end
       else
         return 'numbers-error'
       end
@@ -53,6 +51,25 @@ class GameLogic
     end
   end
 
+  def set_symbols
+    try = Random.new.rand(2)
+    if try == 1
+      @player.symbol = 'X'
+      @bot_player.symbol = 'O'
+    else
+      @player.symbol = 'O'
+      @bot_player.symbol = 'X'
+    end
+  end
+
+  # def refresh
+
+  #   Player.reset_choices
+  #   @winner = nil
+
+  # end
+
+
   def make_move(choice = nil)
     unless check_winner
       if (bot_player.symbol == 'X')
@@ -62,8 +79,8 @@ class GameLogic
         player.make_choice(choice)
         bot_player.make_choice(bot_logic_choice)
       end
-    else
-
+      
+    end
   end
 
   def check_winner
@@ -90,10 +107,25 @@ class GameLogic
 
   def bot_logic_choice
     # if bot_player.symbol = 'X'
-      
+    available_choices = check_board
+    bot_choice = nil
+    #first move
+    if bot_player.answers.length == 0
+      good_start = [1, 3, 7, 9, 5]
+      bot_choice = good_start[Random.new.rand(6)]
+      while player.answers.include?(bot_choice)
+        bot_choice = good_start[Random.new.rand(6)]
+      end
+      return bot_choice
+    end
 
-    # else
-    return 5
+    return available_choices[Random.new.rand(available_choices.length)]
 
   end
+
+  def check_board
+    board = Player.choices.select {|x| x.is_a? Integer}
+    return board
+  end
+
 end
