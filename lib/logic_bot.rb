@@ -23,31 +23,35 @@ class GameLogic
   end
 
   def check_message(mess = nil)
-    case mess
-    when '/start', 'y', 'yes', 'yeah', 'yep', 'start'
-      #p "we are in check message when start, play is #{play?}"
-      if @play == false
-        @play = true
-        set_symbols
-        'start'
-      end
-    when '1', '2', '3', '4', '5', '6', '7', '8', '9'
-      if @play
-        make_move(mess)
-        if !@winner.nil?
-          
-          return 'game-over'
+    if @play == true
+      case mess
+      when '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        if @play
+          make_move(mess)
+          if !@winner.nil?
+            return 'game-over'
+          else
+            return 'numbers'
+          end
         else
-          return 'numbers'
+          return 'numbers-error'
+        end
+      when '/end', '/close', 'no', 'end', 'n'
+        @play = false
+        'end'
+      end
+    else
+      case mess
+      when '/start', 'y', 'yes', 'yeah', 'yep', 'start'
+        #p "we are in check message when start, play is #{play?}"
+        if @play == false
+          @play = true
+          set_symbols
+          'start'
         end
       else
-        return 'numbers-error'
+        'error'
       end
-    when '/end', '/close', 'no', 'end', 'n'
-      @play = false
-      'end'
-    else
-      'numbers-error'
     end
   end
 
@@ -118,8 +122,11 @@ class GameLogic
       end
       return bot_choice
     end
-
-    return available_choices[Random.new.rand(available_choices.length)]
+    if available_choices.length > 0
+      return available_choices[Random.new.rand(available_choices.length)]
+    else
+      return
+    end
 
   end
 

@@ -42,10 +42,14 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
             one_time_keyboard: true
           )
         bot.api.sendMessage(chat_id: message.chat.id, text: question, reply_markup: answers)
-         board = interface.draw_board
-         send_message(bot, message, board)
+        board = interface.draw_board
+        send_message(bot, message, board)
       when 'game-over'
-        mess = "We have a winner!"
+        if game_logic.winner == 'DRAW'
+          mess = "It's a DRAW"
+        elsif
+          mess = "#{game_logic.winner} is winner!"
+        end
         send_message(bot, message, mess)
       when 'end'
         mess = interface.finish_game
@@ -54,7 +58,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         mess = 'please select an available number from the board'
         send_message(bot, message, mess)
       else
-        mess = 'unknown command, try /start, /start start, start /end, /close, no'
+        mess = ANSWERS.sample
         send_message(bot, message, mess)
       end
 
