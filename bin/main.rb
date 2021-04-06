@@ -8,6 +8,8 @@ TOKEN = '1723295532:AAG4CclSM9lsDBAZFTSKTzIKxdWFZUnl3RU'.freeze
 ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah, try /start', 'or you can try start',
            'print start hehe'].freeze
 
+private
+
 def send_message(bot, mes, text = nil)
   bot.api.send_message(
     chat_id: mes.chat.id,
@@ -30,7 +32,7 @@ end
 
 Telegram::Bot::Client.run(TOKEN) do |bot|
   mscounter = 0
-  interface = UI_game.new
+  interface = UIgame.new
   game_logic = interface.game_logic
   player = game_logic.player
   bot.listen do |message|
@@ -48,27 +50,25 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         send_keyboard(bot, message, interface.key_board, interface.draw_board)
       when 'numbers'
         send_keyboard(bot, message, interface.key_board,
-                      "Is #{player.name}'s turn, choose an available number from the board:")
+                      "Is #{player.name}'s turn (#{player.symbol}), choose an available number from the board:")
         send_message(bot, message, interface.draw_board)
       when 'game-over'
-        
+        send_message(bot, message, interface.draw_board)
         answer = if game_logic.winner == 'DRAW'
                    "It's a DRAW\nIf you wanna restart the game type start"
                  else
                    "#{game_logic.winner} is winner!\nIf you wanna restart the game type start"
                  end
-        interface = UI_game.new
+        interface = UIgame.new
         game_logic = interface.game_logic
         player = game_logic.player
         send_keyboard(bot, message, 'Start!', answer)
-        send_message(bot, message, interface.draw_board)
       when 'end'
-        interface = UI_game.new
+        interface = UIgame.new
         game_logic = interface.game_logic
         player = game_logic.player
         send_keyboard(bot, message, 'Start!', interface.finish_game)
       when 'numbers-error'
-        
         send_keyboard(bot, message, interface.key_board,
                       "'#{message.text}' is not a good choice please select an available number from the board.")
         send_message(bot, message, interface.draw_board)

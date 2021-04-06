@@ -1,7 +1,7 @@
 class Player
   attr_accessor :answers, :symbol, :name
 
-  @@choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  @choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   def initialize(name = nil)
     @name = name
@@ -9,19 +9,19 @@ class Player
     @symbol = nil
   end
 
-  def self.choices
-    @@choices
+  class << self
+    attr_reader :choices
   end
 
   def self.reset_choices
-    @@choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
 
   def make_choice(choice = nil)
-    if @@choices.include?(choice.to_i)
-      @answers.push(choice.to_i)
-      @@choices[choice.to_i - 1] = @symbol
-    end
+    return unless Player.choices.include?(choice.to_i)
+
+    @answers.push(choice.to_i)
+    Player.choices[choice.to_i - 1] = @symbol
   end
 
   def to_s

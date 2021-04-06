@@ -1,6 +1,6 @@
 require_relative 'player'
 
-class UI_game
+class UIgame
   attr_accessor :board, :keyboard
   attr_reader :game_logic
 
@@ -17,7 +17,9 @@ class UI_game
   end
 
   def draw_board(_choice = nil)
-    "+-----+-----+-----+\n |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n+-----+-----+-----+\n |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
+    "+-----+-----+-----+\n |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n
+     |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n
+     +-----+-----+-----+\n |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
   end
 
   def start_game

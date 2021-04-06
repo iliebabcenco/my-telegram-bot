@@ -37,24 +37,29 @@ class GameLogic
     else
       case mess
       when 'y', 'yes', 'yeah', 'yep', 'start', 'Start', 'Start!', 'Y'
-        if @play == false
-          @play = true
-          set_symbols
-          bot_player.make_choice(bot_logic_choice) if bot_player.symbol == 'X'
-          'start'
-        end
+        accept_logic
       else
         'error'
       end
     end
   end
 
+  def accept_logic
+    return unless @play == false
+
+    @play = true
+    set_symbols
+    bot_player.make_choice(bot_logic_choice) if bot_player.symbol == 'X'
+    'start'
+  end
+
   def numbers_logic(mess)
     cur_length = player.answers.length
     player.make_choice(mess) unless check_winner
-    return 'numbers-error' if player.answers.length == cur_length
+    return 'numbers-error' if player.answers.length == cur_length && !check_winner
 
     bot_player.make_choice(bot_logic_choice) unless check_winner
+    check_winner
     if @winner.nil?
       'numbers'
     else
@@ -74,11 +79,6 @@ class GameLogic
       @bot_player.symbol = 'X'
     end
   end
-
-  # def make_move(choice = nil)
-  #   player.make_choice(choice) unless check_winner
-  #   bot_player.make_choice(bot_logic_choice) unless check_winner
-  # end
 
   def check_winner
     answers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
@@ -106,7 +106,6 @@ class GameLogic
 
   def bot_logic_choice
     available_choices = check_board
-    bot_choice = nil
     if bot_player.answers.length.zero?
       good_start = [1, 3, 7, 9, 5]
       bot_choice = good_start[Random.new.rand(0..4)]
