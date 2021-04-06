@@ -1,7 +1,5 @@
 require './lib/logic_bot'
 
-# initialize
-# check_message
 describe GameLogic do
   let(:gl) { GameLogic.new }
   let(:play) { true }
