@@ -3,8 +3,8 @@ require_relative 'ui_tictac'
 require_relative 'player'
 
 class GameLogic
-  attr_accessor :play, :player
-  attr_reader :bot_player, :players, :winner
+  attr_accessor :play, :player, :winner
+  attr_reader :bot_player, :players
 
   def initialize
     @play = false

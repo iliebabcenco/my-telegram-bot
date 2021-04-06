@@ -25,7 +25,7 @@ describe Player do
       player.name = 'ilie'
       player.answers = [1, 2, 3]
       player.symbol = 'X'
-      expect(player.to_s).to eql("Player = #{name} with answers = #{answers} and symbol = #{symbol}") 
+      expect(player.to_s).to eql("Player = #{name} with answers = #{answers} and symbol = #{symbol}")
     end
   end
 
@@ -45,9 +45,9 @@ describe Player do
     end
     it "does not push to player's answers array if choice is not an integer" do
       Player.reset_choices
-      choice = "5"
+      choice = '5'
       player.make_choice(choice)
-      expect(player.answers.include?("5")).to be false
+      expect(player.answers.include?('5')).to be false
     end
     it "set the symbol(X or O) on choices array if it is not already seted on choice's place" do
       Player.reset_choices
@@ -65,7 +65,5 @@ describe Player do
       player.make_choice(choice)
       expect(Player.choices[4] == 'X').to be false
     end
-
   end
-
 end
