@@ -16,10 +16,14 @@ class UIgame
      [@board[6].to_s, @board[7].to_s, @board[8].to_s], ['end']]
   end
 
-  def draw_board(_choice = nil)
-    "+-----+-----+-----+\n |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |\n+-----+-----+-----+\n
-     |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |\n
-     +-----+-----+-----+\n |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |\n+-----+-----+-----+"
+  def draw_board
+    "+-----+-----+-----+
+ |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |
++-----+-----+-----+
+ |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |
++-----+-----+-----+
+ |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |
++-----+-----+-----+"
   end
 
   def start_game

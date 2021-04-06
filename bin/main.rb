@@ -2,8 +2,9 @@ require 'telegram/bot'
 require './lib/ui_tictac'
 require './lib/logic_bot'
 require './lib/player'
+require './lib/hide_token'
 
-TOKEN = '1723295532:AAG4CclSM9lsDBAZFTSKTzIKxdWFZUnl3RU'.freeze
+token = TOKEN
 
 ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah, try /start', 'or you can try start',
            'print start hehe'].freeze
@@ -30,7 +31,7 @@ def send_keyboard(bot, message, keyboard_type, text_message)
   )
 end
 
-Telegram::Bot::Client.run(TOKEN) do |bot|
+Telegram::Bot::Client.run(token) do |bot|
   mscounter = 0
   interface = UIgame.new
   game_logic = interface.game_logic
