@@ -14,14 +14,6 @@ class GameLogic
     @winner = nil
   end
 
-  def play?(bool = nil)
-    return @play if bool.nil?
-    raise ArgumentError unless !bool.nil? == bool
-
-    @play = bool
-    @play
-  end
-
   def check_message(mess = nil)
     if @play
       case mess
@@ -42,6 +34,16 @@ class GameLogic
         'error'
       end
     end
+  end
+
+  private
+
+  def play?(bool = nil)
+    return @play if bool.nil?
+    raise ArgumentError unless !bool.nil? == bool
+
+    @play = bool
+    @play
   end
 
   def accept_logic

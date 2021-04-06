@@ -18,8 +18,7 @@ class Player
   end
 
   def make_choice(choice = nil)
-    return unless Player.choices.include?(choice.to_i)
-
+    return unless Player.choices.include?(choice.to_i) || Player.choices.include?(choice)
     @answers.push(choice.to_i)
     Player.choices[choice.to_i - 1] = @symbol
   end

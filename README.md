@@ -53,7 +53,7 @@ You have to use [Telegram](https://web.telegram.org/) in order to play with this
 
 ### Deployment
 
-This application is deploied on [Heroku](https://www.heroku.com/) so you can play with [bot](https://telegram.me/ilie_smart_bot) .
+This application is deploied on [Heroku](https://www.heroku.com/) so you can play with [bot](https://telegram.me/ilie_smart_bot) everytime.
 
 ## Authors
 
