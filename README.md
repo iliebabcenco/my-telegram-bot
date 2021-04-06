@@ -49,7 +49,7 @@ You have to use [Telegram](https://web.telegram.org/) in order to play with this
 ### Run tests
 
 1. Open terminal and switch to project directory
-2. Run `rspec` to check the passing tests
+2. Run `bundle exec rspec spec` to check the passing tests
 
 ### Deployment
 
