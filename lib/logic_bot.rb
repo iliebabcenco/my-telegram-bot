@@ -97,7 +97,7 @@ class GameLogic
       @winner = 'DRAW'
       return true
     end
-    
+
     false
   end
 

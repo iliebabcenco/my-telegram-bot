@@ -31,8 +31,9 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         )
       bot.api.sendMessage(
         chat_id: message.chat.id,
-        text: "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)", 
-        reply_markup: answers)
+        text: "Hey, #{player.name} \nI wanna play with you a tic tac toe game, do you? (y/n)",
+        reply_markup: answers
+      )
     else
       response = game_logic.check_message(message.text)
       p "response = #{response}"
