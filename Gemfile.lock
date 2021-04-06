@@ -20,6 +20,7 @@ GEM
       inflecto
       virtus
     thread_safe (0.3.6)
+    thread_safe (0.3.6-java)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -27,6 +28,7 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
+  universal-java-1.8
   x64-mingw32
 
 DEPENDENCIES

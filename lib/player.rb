@@ -18,12 +18,10 @@ class Player
   end
 
   def make_choice(choice = nil)
-    p "#{name} is making a choice = #{choice}"
     if @@choices.include?(choice.to_i)
       @answers.push(choice.to_i)
       @@choices[choice.to_i - 1] = @symbol
     end
-    p to_s
   end
 
   def to_s

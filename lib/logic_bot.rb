@@ -23,24 +23,16 @@ class GameLogic
   end
 
   def check_message(mess = nil)
-    if @play == true
+    if @play
       case mess
       when '1', '2', '3', '4', '5', '6', '7', '8', '9'
-        if @play
-          make_move(mess)
-          if @winner.nil?
-            'numbers'
-          else
-            Player.reset_choices
-            'game-over'
-          end
-        else
-          'numbers-error'
-        end
+        numbers_logic(mess)
       when '/end', '/close', 'no', 'end', 'n', 'N'
         Player.reset_choices
         @play = false
         'end'
+      when String
+        'numbers-error'
       end
     else
       case mess
@@ -57,6 +49,21 @@ class GameLogic
     end
   end
 
+  def numbers_logic(mess)
+    cur_length = player.answers.length
+    player.make_choice(mess) unless check_winner
+    return 'numbers-error' if player.answers.length == cur_length
+
+    bot_player.make_choice(bot_logic_choice) unless check_winner
+    if @winner.nil?
+      'numbers'
+    else
+      Player.reset_choices
+      @play = false
+      'game-over'
+    end
+  end
+
   def set_symbols
     try = Random.new.rand(2)
     if try == 1
@@ -68,14 +75,10 @@ class GameLogic
     end
   end
 
-  def make_move(choice = nil)
-    unless check_winner
-      player.make_choice(choice)
-    end
-    unless check_winner
-      bot_player.make_choice(bot_logic_choice)
-    end
-  end
+  # def make_move(choice = nil)
+  #   player.make_choice(choice) unless check_winner
+  #   bot_player.make_choice(bot_logic_choice) unless check_winner
+  # end
 
   def check_winner
     answers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
