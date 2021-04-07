@@ -1,4 +1,4 @@
-require './lib/ui_tictac'
+require_relative '../lib/ui_tictac'
 
 describe UIgame do
   let(:ui) { UIgame.new }

@@ -1,4 +1,4 @@
-require './lib/logic_bot'
+require_relative '../lib/logic_bot'
 
 describe GameLogic do
   let(:gl) { GameLogic.new }

@@ -1,8 +1,8 @@
 require 'telegram/bot'
-require_relative './lib/ui_tictac'
-require_relative './lib/logic_bot'
-require_relative './lib/player'
-require_relative './lib/hide_token'
+require_relative '../lib/ui_tictac'
+require_relative '../lib/logic_bot'
+require_relative '../lib/player'
+require_relative '../lib/hide_token'
 
 token = TOKEN
 
