@@ -107,73 +107,73 @@ class GameLogic
   end
 
   def bot_logic_choice
-    
-    available_choices = check_board
-    good_choices = []
     if bot_player.answers.length.zero?
       good_start = [1, 3, 7, 9, 5]
       bot_choice = good_start[Random.new.rand(0..4)]
       bot_choice = good_start[Random.new.rand(0..4)] while player.answers.include?(bot_choice)
       return bot_choice
     end
-    
+
     bot_good_choice
-    #return available_choices[Random.new.rand(0..available_choices.length - 1)] if available_choices.length.positive?
   end
 
   def bot_good_choice
     win_answers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-    answers = bot_player.answers
-    available_choices = check_board
-    max = answers.length
     good_choices = []
+    return check_player if check_player.is_a? Integer
+
+    length_logic(win_answers, good_choices)
 
     good_choices.each do |x|
-      if x.length == 1 && available_choices.include?(x[0])
-        return x[0]
+      next unless x.length == 1 && check_board.include?(x[0])
+
+      return x[0]
+    end
+    return check_next(good_choices) if good_choices.length > 1
+    return check_board[Random.new.rand(0..check_board.length - 1)] if check_board.length.positive?
+  end
+
+  def length_logic(win_answers, good_choices)
+    if bot_player.answers.length == 1
+      win_answers.each do |each|
+        good_choices.push(each - bot_player.answers) if each.include?(bot_player.answers[0])
       end
     end
-    
-    win_answers.each do |each| 
-      if each.include?(answers[0])
-        good_choices.push(each - answers)
-      end
+
+    return unless bot_player.answers.length >= 2
+
+    win_answers.each do |each|
+      subarr = each - bot_player.answers
+      subaru = subarr & check_board
+      return subaru[0] if subaru.length == 1
     end
-    p "there is good choices = #{good_choices} bot answers #{answers} available #{available_choices}"
-    
-    return check_next(good_choices)
   end
 
   def check_next(good_choices)
     available_choices = check_board
-    return available_choices[Random.new.rand(0..available_choices.length - 1)] if good_choices.length == 0
-    
-    until available_choices.include?(good_choice)
-      good_choice_arr = good_choices[Random.new.rand(0..good_choices.length-1)]
-      if good_choice_arr.length >= 2
-        good_choice = good_choice_arr[Random.new.rand(0..1)]
-        next_elem_gc = good_choice_arr[(good_choice_arr.index(good_choice)-1).abs]
-        p "good choices = #{good_choices} good_choice_arr = #{good_choice_arr} good_choice = #{good_choice} and next is = #{next_elem_gc}"
-        until available_choices.include?(next_elem_gc)
-          good_choice_arr = good_choices[Random.new.rand(0..good_choices.length-1)]
-          good_choice = good_choice_arr[Random.new.rand(0..1)]
-          next_elem_gc = good_choice_arr[(good_choice_arr.index(good_choice)-1).abs]
-          p "good_choice = #{good_choice} and next is = #{next_elem_gc}"
-        end
-      elsif available_choices.include?(good_choice)
-        good_choice = good_choice_arr[0]
-      end
+    good_choice_arr = good_choices[Random.new.rand(0..good_choices.length - 1)]
+    good_choice = good_choice_arr[Random.new.rand(0..1)]
+    next_elem_gc = good_choice_arr[(good_choice_arr.index(good_choice) - 1).abs]
+    until available_choices.include?(good_choice) && available_choices.include?(next_elem_gc)
+      good_choice_arr = good_choices[Random.new.rand(0..good_choices.length - 1)]
+      good_choice = good_choice_arr[Random.new.rand(0..1)]
+      next_elem_gc = good_choice_arr[(good_choice_arr.index(good_choice) - 1).abs]
     end
-    return good_choice
+    good_choice
   end
 
-  # def check_chances(player)
-  #   win_answers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-  #   answers = player.answers
-  #   available_choices = check_board
-  #   return 'low' if answers.lenght <= 1
+  def check_player
+    return unless player.answers.length >= 2
 
-  # end
+    win_answers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+    win_answers.each do |each|
+      next unless (player.answers - each).empty? || (each - player.answers).empty?
+
+      subarr = each - player.answers
+      subaru = subarr & check_board
+      return subaru[0]
+    end
+  end
 
   def check_board
     Player.choices.select { |x| x.is_a? Integer }
