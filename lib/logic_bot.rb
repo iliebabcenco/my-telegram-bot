@@ -130,6 +130,7 @@ class GameLogic
       return x[0]
     end
     return check_next(good_choices) if good_choices.length > 1
+
     check_board[Random.new.rand(0..check_board.length - 1)] if check_board.length.positive?
   end
 

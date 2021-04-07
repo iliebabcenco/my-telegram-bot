@@ -41,8 +41,6 @@ Telegram::Bot::Client.run(token) do |bot|
   player = game_logic.player
   bot.listen do |message|
     player.name = message.from.first_name
-    time = Time.now
-    p "#{player.name} is now started the game"
     mscounter += 1
     if mscounter == 1
       key_type = %w[yes no]
@@ -69,21 +67,17 @@ Telegram::Bot::Client.run(token) do |bot|
         game_logic = interface.game_logic
         player = game_logic.player
         send_keyboard(bot, message, 'Start!', answer)
-        p "player #{player.name} is at game over at #{Time.now - time}"
       when 'end'
         interface = UIgame.new
         game_logic = interface.game_logic
         player = game_logic.player
         send_keyboard(bot, message, 'Start!', interface.finish_game)
-        p "player #{player.name} is at end at #{Time.now - time}"
       when 'numbers-error'
         send_keyboard(bot, message, interface.key_board,
                       "'#{message.text}' is not a good choice please select an available number from the board.")
         send_message(bot, message, interface.draw_board)
-        p "player #{player.name} is at numbers-error at #{Time.now - time}"
       when 'error'
         send_message(bot, message, ANSWERS.sample)
-        p "player #{player.name} is at error at #{Time.now - time}"
       end
     end
   end

@@ -2,8 +2,8 @@
 
 # Ruby Telegram Bot
 
-I did this project for learning purposes as a capstone project from Microverse after completing Ruby curriculum.
-Ut us a Telegram bot for playing Tic-Tac-Toe game.
+I did this project for learning purposes as a capstone project from Microverse after completing the Ruby curriculum.
+Ut us a Telegram bot for playing the Tic-Tac-Toe game.
 
 ## Description
 
@@ -53,7 +53,7 @@ You have to use [Telegram](https://web.telegram.org/) in order to play with this
 
 ### Deployment
 
-This application is deploied on [Heroku](https://www.heroku.com/) so you can play with [bot](https://telegram.me/ilie_smart_bot) everytime.
+This application is deployed on [Heroku](https://www.heroku.com/) so you can play with [bot](https://telegram.me/ilie_smart_bot) every time.
 
 ## Authors
 
