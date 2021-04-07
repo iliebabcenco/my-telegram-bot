@@ -6,8 +6,11 @@ require './lib/hide_token'
 
 token = TOKEN
 
-ANSWERS = ['hey try /start', 'of course, now try /start', 'yeah, try /start', 'or you can try start',
-           'print start hehe'].freeze
+ANSWERS = ['hey try /start, (if type start and messages like this repeats, bot is busy with another player)',
+           'of course, now try /start (if type start and messages like this repeats, bot is busy with another player)',
+           'yeah, try /start (if type start and messages like this repeats, bot is busy with another player)',
+           'or you can try start (if type start and messages like this repeats, bot is busy with another player)',
+           'print start hehe (if type start and messages like this repeats, bot is busy with another player)'].freeze
 
 private
 
