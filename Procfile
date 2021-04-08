@@ -1,0 +1,1 @@
+run: ruby bin/main.rb
