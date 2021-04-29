@@ -23,7 +23,7 @@ You have to use [Telegram](https://web.telegram.org/) in order to play with this
 ## Built With
 
 - Ruby
-- using [this Ruby wrapper](https://github.com/atipugin/telegram-bot-ruby)
+- [this Ruby wrapper](https://github.com/atipugin/telegram-bot-ruby)
 
 ## How it looks
 
